@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
+sns.set_theme()
 def find_percent_missing_data(dataframe):
     for col in dataframe.columns:
         missing_data = dataframe[col].isna().sum()
@@ -18,18 +19,20 @@ def draw_bar_chart(x_axis,y_axis,x_name= None, y_name = None,x_axis_rotation = N
     plt.ylabel(y_name)
     plt.show()
 
-def draw_pie(data,labels):
+def draw_pie(data, labels, name =None):
     #define Seaborn color palette to use
     colors = sns.color_palette('pastel')[0:10]
     #create pie chart
     plt.pie(
         data, labels = labels, 
         colors = colors, autopct='%.0f%%', 
-        radius= 2)
+        radius= 1.5)
     # x_axis_legend = -0,5
     # y_axis_legend = 0.2
     plt.legend(loc="lower right", bbox_to_anchor=(-0.5, 0.2))
+    plt.title(
+        name, 
+        fontsize = 20 , 
+        loc='left',
+        x = -0.75)
     plt.show()
-
-def add(x,y):
-    return x+y
