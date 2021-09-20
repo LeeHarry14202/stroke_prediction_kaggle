@@ -6,11 +6,13 @@ import numpy as np
 import seaborn as sns
 
 sns.set_theme()
-def find_percent_missing_data(dataframe):
-    for col in dataframe.columns:
-        missing_data = dataframe[col].isna().sum()
-        missing_percent = (missing_data  / len(dataframe))* 100
-        print(f"{col}: {missing_percent}% ")
+def draw_missing_data_table(dataframe):
+    total_missing_data = dataframe.isnull().sum()
+    total_row_dataframe = dataframe.isnull().count()
+    percent_missing_data = (total_missing_data / total_row_dataframe)
+    missing_data_table = pd.concat([total_missing_data , percent_missing_data], axis=1, keys=['Total', 'Percent'])
+    return missing_data_table
+
 
 def draw_bar_chart(x_axis,y_axis,x_name= None, y_name = None,x_axis_rotation = None):
     plt.bar(x = x_axis, height = y_axis, color = 'green')
