@@ -41,7 +41,3 @@ def draw_pie(data, labels, name =None):
         loc='left',
         x = -0.75)
     plt.show()
-
-
-def draw_multiple_chart():
-    pass
