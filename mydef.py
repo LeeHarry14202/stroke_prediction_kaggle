@@ -24,14 +24,20 @@ def draw_bar_chart(x_axis,y_axis,x_name= None, y_name = None,x_axis_rotation = N
     plt.show()
 
 
-def draw_pie(data, labels, name =None):
+def draw_pie(df, name =None):
+    df = df.value_counts()
     #define Seaborn color palette to use
-    colors = sns.color_palette('pastel')[0:10]
+    colors = sns.color_palette('winter')[0:10]
     #create pie chart
     plt.pie(
-        data, labels = labels, 
-        colors = colors, autopct='%1.2f%%', 
-        radius= 1.5)
+        x = df, 
+        colors = colors, 
+        labels=list(df.index),
+        autopct='%1.2f%%', 
+        
+        radius= 1.5,
+        shadow =True,
+        )
     # x_axis_legend = -0,5
     # y_axis_legend = 0.2
     plt.legend(loc="lower right", bbox_to_anchor=(-0.5, 0.2))
@@ -107,7 +113,7 @@ def score_module_classifier(x_train, y_train, x_test, y_test):
     from sklearn.tree import DecisionTreeClassifier
 
     classifiers = [
-        [XGBClassifier(random_state =1),'XGB Classifier'], [RandomForestClassifier(random_state =1),'Random Forest'], 
+        [XGBClassifier(random_state =1, use_label_encoder=False),'XGB Classifier'], [RandomForestClassifier(random_state =1),'Random Forest'], 
         [LGBMClassifier(random_state =1),'LGBM Classifier'], [KNeighborsClassifier(), 'K-Nearest Neighbours'], 
         [SGDClassifier(random_state =1),'SGD Classifier'], [SVC(random_state =1),'SVC'],
         [GaussianNB(),'GaussianNB'],[DecisionTreeClassifier(random_state =1),'Decision Tree Classifier']
