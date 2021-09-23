@@ -92,3 +92,41 @@ def draw_multiple_categorical_chart(df, hue = None):
         index +=1
         sns.countplot(data = df, x = list_categorical_column[index], hue = hue, palette='winter_r',ax =ax2)
         index +=1
+
+
+def score_module_classifier(x_train, y_train, x_test, y_test):
+    # Import ML Libraries
+    from sklearn.metrics import accuracy_score, recall_score, precision_score , confusion_matrix
+    from xgboost import XGBClassifier
+    from sklearn.linear_model import SGDClassifier
+    from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.svm import SVC
+    from lightgbm import LGBMClassifier
+    from sklearn.naive_bayes import GaussianNB
+    from sklearn.tree import DecisionTreeClassifier
+
+    classifiers = [
+        [XGBClassifier(random_state =1),'XGB Classifier'], [RandomForestClassifier(random_state =1),'Random Forest'], 
+        [LGBMClassifier(random_state =1),'LGBM Classifier'], [KNeighborsClassifier(), 'K-Nearest Neighbours'], 
+        [SGDClassifier(random_state =1),'SGD Classifier'], [SVC(random_state =1),'SVC'],
+        [GaussianNB(),'GaussianNB'],[DecisionTreeClassifier(random_state =1),'Decision Tree Classifier']
+    ];
+
+    for cls in classifiers:
+        model = cls[0]
+        model.fit(x_train, y_train)
+        
+        y_pred = model.predict(x_test)
+
+        accuracy =  round(accuracy_score(y_test, y_pred), 2) *  100
+        recall = round(recall_score(y_test, y_pred), 2) *  100
+        precision = round(precision_score(y_test, y_pred), 2) *  100
+
+        print(f"{cls[1]}")
+        print ('Confusion Matrix:')
+        print(confusion_matrix(y_test, y_pred))
+        print("Accuracy : ", round(accuracy_score(y_test, y_pred), 2) *  100)
+        print("Recall : ", round(recall_score(y_test, y_pred), 2) *  100)
+        print("Precision : ", round(precision_score(y_test, y_pred), 2) *  100)
+        print("---------------------------------")
